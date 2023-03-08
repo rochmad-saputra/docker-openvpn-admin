@@ -1,0 +1,46 @@
+{
+  "name": "bootstrap-table",
+  "homepage": "https://github.com/wenzhixin/bootstrap-table",
+  "authors": [
+    "zhixin <wenzhixin2010@gmail.com>"
+  ],
+  "description": "An extended table to integration with some of the most widely used CSS frameworks. (Supports Bootstrap, Semantic UI, Bulma, Material Design, Foundation)",
+  "main": [
+    "dist/bootstrap-table.min.js",
+    "dist/bootstrap-table.min.css"
+  ],
+  "keywords": [
+    "bootstrap",
+    "table",
+    "pagination",
+    "checkbox",
+    "radio",
+    "datatables",
+    "css",
+    "css-framework",
+    "semantic",
+    "semantic-ui",
+    "bulma",
+    "material",
+    "material-design",
+    "materialize",
+    "foundation"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "site"
+  ],
+  "version": "1.21.2",
+  "_release": "1.21.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.21.2",
+    "commit": "28673763bcddb9f1fc0e95557869208a77a81f30"
+  },
+  "_source": "https://github.com/wenzhixin/bootstrap-table.git",
+  "_target": "^1.11.0",
+  "_originalSource": "bootstrap-table"
+}
