@@ -1,8 +1,4 @@
-FROM debian:stretch
-
-ARG DEB_PHP
-ARG DEB_OPENVPN
-ARG DEB_OTHER
+FROM docker pull php:fpm-bullseye
 
 # Install dependecies and clean the cache
 RUN apt-get update \
