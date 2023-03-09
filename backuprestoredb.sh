@@ -2,7 +2,8 @@
 
 #mysqldump -uhaproxy_root -pcupetong --port=3307 --protocol=tcp --host=192.168.101.201 openvpn > /root/database/openvpn.$(date +%F_%H_%M).db
 #mysql -uhaproxy_root -pcupetong --port=3307 --protocol=tcp --host=172.19.0.1 --database=openvpn < /root/database/openvpn.$(date +%F_%H_%M).db
-
+#cron
+# */1 * * *  /root/backuprestoredb.sh &> /var/log/backuprestoredb.log
 
 #!/bin/bash
 
