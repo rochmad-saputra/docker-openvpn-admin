@@ -11,11 +11,16 @@ services:
       - ./logs/nginx:/var/log/nginx
     links:
       - "php-fpm"
+    networks:
+      - network
 
   php-fpm:
     build: php/
     volumes:
-      - /var/www/openvpn-admin:/var/www
+#      - /var/www/openvpn-admin:/var/www
+      - ./openvpn-admin-html:/var/www
+    networks:
+      - network
 
   mariadb:
     image: mariadb:10.5.19
@@ -28,7 +33,32 @@ services:
       - /var/lib/mysql:/var/lib/mysql
     ports:
       - "172.19.0.1:3307:3306"
+    networks:
+      - network
 
+  openvpn-monitor:
+    image: ruimarinho/openvpn-monitor
+    environment:
+      - OPENVPNMONITOR_DEFAULT_DATETIMEFORMAT="%%d/%%m/%%Y"
+      - OPENVPNMONITOR_DEFAULT_LATITUDE=-6.2
+      - OPENVPNMONITOR_DEFAULT_LOGO=
+      - OPENVPNMONITOR_DEFAULT_LONGITUDE=120
+      - OPENVPNMONITOR_DEFAULT_MAPS=True
+      - OPENVPNMONITOR_DEFAULT_MAPSHEIGHT=600
+      - OPENVPNMONITOR_DEFAULT_SITE=
+      - OPENVPNMONITOR_SITES_0_ALIAS="OpenVPN Office"
+      - OPENVPNMONITOR_SITES_0_HOST=172.25.30.77
+      - OPENVPNMONITOR_SITES_0_NAME="OpenVPN Office"
+      - OPENVPNMONITOR_SITES_0_PORT=8991
+      - OPENVPNMONITOR_SITES_0_SHOWDISCONNECT=True
+      - OPENVPNMONITOR_SITES_1_ALIAS="Server 2 Server"
+      - OPENVPNMONITOR_SITES_1_HOST=172.25.30.77
+      - OPENVPNMONITOR_SITES_1_NAME="Server 2 Server"
+      - OPENVPNMONITOR_SITES_1_PORT=8992
+    ports:
+      - "172.25.30.77:82:80"
+    networks:
+      - network
 
 #  phpmyadmin:
 #    image: phpmyadmin/phpmyadmin
@@ -43,3 +73,11 @@ services:
 #    links:
 #      - "nginx"
 #      - "mariadb"
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.19.0.0/16
+         gateway: 172.19.0.1
