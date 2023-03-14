@@ -5,7 +5,7 @@ services:
     image: nginx:latest
     restart: always
     ports:
-      - "172.25.30.77:80:80"
+      - "172.19.0.1:80:80"
     volumes:
       - ./configs/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
       - ./openvpn-admin-html:/var/www
@@ -59,7 +59,7 @@ services:
       - OPENVPNMONITOR_SITES_1_NAME="Server 2 Server"
       - OPENVPNMONITOR_SITES_1_PORT=8992
     ports:
-      - "172.25.30.77:82:80"
+      - "172.19.0.1:82:80"
     networks:
       - network
 
@@ -72,7 +72,7 @@ services:
 #      - MYSQL_ROOT_PASSWORD=root
 #      - MYSQL_PASSWORD=123123
 #    ports:
-#      - "172.25.30.77:8080:80"
+#      - "172.19.0.1:8080:80"
 #    links:
 #      - "nginx"
 #      - "mariadb"
@@ -82,14 +82,21 @@ services:
     image: pihole/pihole:latest
     # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
     ports:
-      - "53:53/tcp"
-      - "53:53/udp"
+#      - "53:53/tcp"
+#      - "53:53/udp"
+      - "172.19.0.1:53:53/tcp"
+      - "172.19.0.1:53:53/udp"
+      - "10.26.0.1:53:53/tcp"
+      - "10.26.0.1:53:53/udp"
 #      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
-      - "172.25.30.77:81:80/tcp"
+      - "172.19.0.1:81:80/tcp"
     environment:
-      TZ: 'America/Chicago'
+      TZ: 'Asia/Jakarta'
       WEBPASSWORD: 'adm1np!holes'
-      PIHOLE_DNS_: '1.1.1.1,8.8.8.8'
+#      PIHOLE_DNS_1: '172.16.0.61'
+#      PIHOLE_DNS_2: '172.16.0.62'
+#      PIHOLE_DNS_3: '212.117.62.66'
+      PIHOLE_DNS_: '172.16.0.62;172.16.0.61;212.117.62.66'
     # Volumes store your data between container upgrades
     volumes:
       - './pihole-data/etc-pihole:/etc/pihole'
@@ -97,7 +104,15 @@ services:
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
       - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+      - CAP_NET_BIND_SERVICE
+      - CAP_NET_RAW
+      - CAP_NET_ADMIN
+      - CAP_CHOWN
+      - NET_BIND_SERVICE
+      - NET_RAW
     restart: unless-stopped
+    networks:
+      - network
 
 
 

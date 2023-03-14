@@ -2,4 +2,6 @@
 /openvpn/
 /database/
 /logs/
-
+pihole-data/etc-pihole/gravity.db
+pihole-data/etc-pihole/gravity_old.db
+pihole-data/etc-pihole/pihole-FTL.db
