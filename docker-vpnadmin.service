@@ -1,0 +1,20 @@
+[Unit]
+Description=Docker Compose vpn admin & pihole & vpn monitor
+Requires=docker.service
+After=docker.service
+StartLimitIntervalSec=60
+
+[Service]
+WorkingDirectory=/opt/source/docker-openvpn-admin/
+ExecStartPre=/usr/bin/docker network prune -f
+ExecStartPre=/usr/bin/docker compose build
+ExecStartPre=/usr/bin/docker compose down
+ExecStart=/usr/bin/docker compose up
+ExecStop=/usr/bind/ocker compose down
+ExecStartPost=bash ./deleteiptables.sh
+TimeoutStartSec=0
+Restart=on-failure
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target

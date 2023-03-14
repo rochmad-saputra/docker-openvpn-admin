@@ -77,7 +77,6 @@ services:
 #      - "mariadb"
 
   pihole:
-    container_name: pihole
     image: pihole/pihole:latest
     # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
     ports:
@@ -85,6 +84,8 @@ services:
       - "172.19.0.1:53:53/udp"
       - "10.26.0.1:53:53/tcp"
       - "10.26.0.1:53:53/udp"
+#      - "53:53/udp"
+#      - "53:53/tcp"
 #      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
       - "172.19.0.1:81:80/tcp"
     environment:
@@ -120,3 +121,4 @@ networks:
      config:
        - subnet: 172.19.0.0/16
          gateway: 172.19.0.1
+

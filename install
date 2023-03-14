@@ -1,0 +1,3 @@
+ln -s $PWD/docker-vpnadmin.service /etc/systemd/system/docker-vpnadmin.service
+ln -s $PWD/haproxy.cfg /etc/haproxy/haproxy.cfg
+1 */1 * * *  $PWD/backuprestoredb.sh &> /var/log/backuprestoredb.log
